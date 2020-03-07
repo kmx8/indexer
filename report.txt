@@ -1,0 +1,13 @@
+Part A:
+
+I used python and major functions other than writing utilized was the tokenizing module. Made two hashtables to to count position, document number and what number token it was, as well as frequency of each word.
+Only issue I have with the position is that the tokenizer counts some very weird charcters and can inflate the position number.
+
+Part B:
+
+documents read : 483
+vocabulary     : 219515
+
+I guess my hw2 stopped at 483 documents :( but I was able to read through them all.
+Total vocab I just did a line count of my two index files.
+
