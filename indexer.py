@@ -15,14 +15,15 @@ def indexer(documents):
             text = f.read()
             tokens = nltk.word_tokenize(text)
             tokCount = 0
+            docIndex = {}
             for token in tokens:
                 #print(token)
-                #token counts ===============================
+                #token counts per document
                 tokCount += 1
-                if token not in countIndex:
-                    countIndex[token] = 1
+                if token not in docIndex:
+                    docIndex[token] = 1
                 else:
-                    countIndex[token] += 1
+                    docIndex[token] += 1
                 if token not in posIndex:
                     posIndex[token] = []
                     posIndex[token].append((n,tokCount)) #this is for indexer position
@@ -33,8 +34,15 @@ def indexer(documents):
             print("doc # = %d" % (n))
             #if n>=5:
             #    break
-            continue
+            for token in docIndex:
+                if token not in countIndex:
+                    countIndex[token] = []
+                    countIndex[token].append((n, docIndex[token]))
+                else:
+                    countIndex[token].append((n, docIndex[token]))
+                continue
         else:
+            print("not a valid .txt")
             continue
     f = open('posIndex.txt', 'w', encoding = 'utf-8')
     for term in posIndex:
@@ -47,7 +55,8 @@ def indexer(documents):
     s = open('freqIndex.txt', 'w', encoding = 'utf-8')
     for term in countIndex:
         s.write(term+' => ')
-        s.write(str(countIndex[term]))
+        for posting in countIndex[term]:
+            s.write('(%d, %d) ' % (posting[0], posting[1]))
         s.write('\n')
     s.close()
 
