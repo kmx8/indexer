@@ -5,8 +5,8 @@ documents = "/home/min/Documents/school/is392/assignments/hw2/pages"
 
 def indexer(documents):
     #make hashtable
-    index = {}
-    sig = {}
+    posIndex = {}
+    countIndex = {}
     n = 0 #doc number
     for filename in os.listdir(documents):
         if filename.endswith(".txt"):
@@ -19,15 +19,15 @@ def indexer(documents):
                 #print(token)
                 #token counts ===============================
                 tokCount += 1
-                if token not in sig:
-                    sig[token] = 1
+                if token not in countIndex:
+                    countIndex[token] = 1
                 else:
-                    sig[token] += 1
-                if token not in index:
-                    index[token] = []
-                    index[token].append((n,tokCount)) #this is for indexer position
+                    countIndex[token] += 1
+                if token not in posIndex:
+                    posIndex[token] = []
+                    posIndex[token].append((n,tokCount)) #this is for indexer position
                 else:
-                    index[token].append((n,tokCount)) 
+                    posIndex[token].append((n,tokCount)) 
                 #print(key)
             #print(lines)
             print("doc # = %d" % (n))
@@ -37,17 +37,17 @@ def indexer(documents):
         else:
             continue
     f = open('posIndex.txt', 'w', encoding = 'utf-8')
-    for term in index:
+    for term in posIndex:
         f.write(term+' => ')
-        for posting in index[term]:
+        for posting in posIndex[term]:
             f.write('(%d, %d) ' % (posting[0], posting[1]))
         f.write('\n')
     f.close()
     
     s = open('freqIndex.txt', 'w', encoding = 'utf-8')
-    for term in sig:
+    for term in countIndex:
         s.write(term+' => ')
-        s.write(str(sig[term]))
+        s.write(str(countIndex[term]))
         s.write('\n')
     s.close()
 
